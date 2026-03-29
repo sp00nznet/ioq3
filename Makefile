@@ -1099,6 +1099,7 @@ ifeq ($(PLATFORM),emscripten)
     CLIENT_EXTRA_FILES+=code/web/server.html
   endif
 
+  BASE_CFLAGS+=-DEMSCRIPTEN
   CLIENT_CFLAGS+=-s USE_SDL=2
 
   CLIENT_LDFLAGS+=-s TOTAL_MEMORY=256mb -sALLOW_MEMORY_GROWTH
@@ -1108,7 +1109,8 @@ ifeq ($(PLATFORM),emscripten)
   CLIENT_LDFLAGS+=-s MAX_WEBGL_VERSION=2
   CLIENT_LDFLAGS+=-s FULL_ES2=1
   # The HTML file can use these functions to load extra files before the game starts.
-  CLIENT_LDFLAGS+=-s EXPORTED_RUNTIME_METHODS=FS,addRunDependency,removeRunDependency,cwrap,stackAlloc,out,AL,Browser
+  CLIENT_LDFLAGS+=-s EXPORTED_RUNTIME_METHODS=FS,addRunDependency,removeRunDependency,cwrap,ccall,stackAlloc,out,AL,Browser
+  CLIENT_LDFLAGS+=-s EXPORTED_FUNCTIONS=_main,_Cbuf_AddText
   CLIENT_LDFLAGS+= -lidbfs.js
   CLIENT_LDFLAGS+=-s EXIT_RUNTIME=1
   CLIENT_LDFLAGS+=-s EXPORT_ES6
